@@ -92,6 +92,7 @@ async function add(user) {
 			username: user.username,
 			fullname: user.fullname,
 			password: user.password,
+			imgUrl: user.imgUrl,
 			isAdmin: false
 			// score: user.score || 0,
 		}
