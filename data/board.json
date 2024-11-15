@@ -1,0 +1,296 @@
+[
+    {
+        "title": "gal's board 2.0",
+        "isStarred": false,
+        "createdBy": {
+            "_id": "u101",
+            "fullname": "Abi Abambi",
+            "imgUrl": "/img/user/gal.png"
+        },
+        "style": {
+            "backgroundImage": "url(https://res.cloudinary.com/dkckt1l7i/image/upload/v1731148742/gradiant-crystal_bkqsso.svg)"
+        },
+        "urls": {
+            "regular": "https://res.cloudinary.com/dkckt1l7i/image/upload/v1731148742/gradiant-crystal_bkqsso.svg"
+        },
+        "labels": [
+            {
+                "id": "l102",
+                "color": "#FFD5D2",
+                "fontColor": "#533f04",
+                "title": "In progress"
+            },
+            {
+                "id": "l103",
+                "color": "#E774BB",
+                "fontColor": "#702e00",
+                "title": ""
+            }
+        ],
+        "members": [
+            {
+                "_id": "u101",
+                "fullname": "Abi Abambi",
+                "imgUrl": "/img/user/gal.png"
+            }
+        ],
+        "groups": [
+            {
+                "id": "5vULUA",
+                "style": {},
+                "tasks": [
+                    {
+                        "id": "NQxJVr",
+                        "title": "Backend",
+                        "memberIds": [
+                            "u101"
+                        ],
+                        "labelIds": [
+                            "l102",
+                            "l103"
+                        ],
+                        "checklists": [
+                            {
+                                "id": "PNAlL6",
+                                "title": "Checklist-1",
+                                "todos": [
+                                    {
+                                        "id": "Ar26kx",
+                                        "title": "Create set up for backend",
+                                        "isDone": true
+                                    },
+                                    {
+                                        "id": "M0T99B",
+                                        "title": "connect socket service",
+                                        "isDone": false
+                                    }
+                                ],
+                                "doneTodosPercent": 50
+                            }
+                        ],
+                        "style": {
+                            "backgroundImage": {
+                                "url": "url(/img/cover-bgImage/marek-piwnicki-w6Qhc3Xid4M-unsplash.jpg)",
+                                "source": "fromSplash"
+                            }
+                        },
+                        "coverSize": "half",
+                        "dueDate": "2024-11-15T07:11:52.782Z",
+                        "startDate": null,
+                        "dueTime": "2024-11-15T07:11:52.782Z",
+                        "status": "inProgress",
+                        "description": "<p>end to end final project </p>"
+                    },
+                    {
+                        "id": "2W9Zpz",
+                        "title": "Code review",
+                        "description": "<p>review the code for the new feature</p>",
+                        "labelIds": [
+                            "l104",
+                            "l103",
+                            "l102",
+                            "l105"
+                        ],
+                        "memberIds": [
+                            "u101"
+                        ],
+                        "attachments": [
+                            {
+                                "url": "https://res.cloudinary.com/webify/image/upload/v1731654862/ysgaafektstwjnjd8axa.jpg",
+                                "bgColor": "rgb(192, 143, 92)",
+                                "fileName": "_.jpeg",
+                                "isCover": false,
+                                "id": "5RhaAc",
+                                "uploadedAt": 1731654863118
+                            }
+                        ],
+                        "coverSize": "half"
+                    }
+                ],
+                "title": "To Do"
+            },
+            {
+                "id": "s3jcnd",
+                "style": {},
+                "tasks": [
+                    {
+                        "id": "o1fItw",
+                        "title": "Frontend ",
+                        "description": "<p>end to end final project - fronted </p>",
+                        "dueDate": "2024-11-15T07:17:04.000Z",
+                        "startDate": "2024-11-06T07:17:04.000Z",
+                        "dueTime": "2024-11-15T07:17:04.692Z",
+                        "status": "done",
+                        "labelIds": [
+                            "l103"
+                        ],
+                        "coverSize": "half"
+                    },
+                    {
+                        "id": "slAx7b",
+                        "title": "Demo-1",
+                        "description": "<p>presentation for demo 1</p>",
+                        "dueDate": "2024-11-12T07:19:20.000Z",
+                        "startDate": null,
+                        "dueTime": "2024-11-15T07:19:20.779Z",
+                        "status": "inProgress",
+                        "memberIds": [
+                            "u101"
+                        ],
+                        "labelIds": [
+                            "l101"
+                        ],
+                        "coverSize": "half",
+                        "style": {
+                            "backgroundColor": "#F5CD47"
+                        },
+                        "archivedAt": 1731655183811
+                    }
+                ],
+                "title": "Done"
+            }
+        ],
+        "activites": [],
+        "createdAt": 1731412138862
+    },
+    {
+        "title": "renovating the house",
+        "isStarred": false,
+        "archivedAt": null,
+        "createdBy": {
+            "_id": "u101",
+            "fullname": "Abi Abambi",
+            "imgUrl": "/img/user/gal.png"
+        },
+        "style": {
+            "backgroundImage": "url(https://res.cloudinary.com/dkckt1l7i/image/upload/v1731148744/gradiant-volcano_mherm3.svg)"
+        },
+        "labels": [
+            {
+                "id": "l101",
+                "title": "Done",
+                "color": "#61bd4f"
+            },
+            {
+                "id": "l102",
+                "title": "Progress",
+                "color": "#61bd33"
+            }
+        ],
+        "members": [
+            {
+                "_id": "u101",
+                "fullname": "Tal Taltal",
+                "imgUrl": "/img/user/gal.png"
+            },
+            {
+                "_id": "u102",
+                "fullname": "Josh Ga",
+                "imgUrl": "/img/user/gal.png"
+            }
+        ],
+        "groups": [
+            {
+                "id": "g101",
+                "title": "Group 1",
+                "archivedAt": 1589983468418,
+                "tasks": [
+                    {
+                        "id": "c101",
+                        "title": "Replace logo"
+                    },
+                    {
+                        "id": "c102",
+                        "title": "Add Samples"
+                    }
+                ],
+                "style": {}
+            },
+            {
+                "id": "g102",
+                "title": "Group 2",
+                "tasks": [
+                    {
+                        "id": "c103",
+                        "title": "Do that",
+                        "archivedAt": 1589983468418
+                    },
+                    {
+                        "id": "c104",
+                        "title": "Help me",
+                        "status": "inProgress",
+                        "priority": "high",
+                        "dueDate": "2024-09-24",
+                        "description": "description",
+                        "comments": [
+                            {
+                                "id": "ZdPnm",
+                                "title": "also @yaronb please CR this",
+                                "createdAt": 1590999817436,
+                                "byMember": {
+                                    "_id": "u101",
+                                    "fullname": "Tal Tarablus",
+                                    "imgUrl": "/img/user/gal.png"
+                                }
+                            }
+                        ],
+                        "checklists": [
+                            {
+                                "id": "YEhmF",
+                                "title": "Checklist",
+                                "todos": [
+                                    {
+                                        "id": "212jX",
+                                        "title": "To Do 1",
+                                        "isDone": false
+                                    }
+                                ]
+                            }
+                        ],
+                        "memberIds": [
+                            "u101"
+                        ],
+                        "labelIds": [
+                            "l101",
+                            "l102"
+                        ],
+                        "byMember": {
+                            "_id": "u101",
+                            "fullname": "Tal Tarablus",
+                            "imgUrl": "/img/user/gal.png"
+                        },
+                        "style": {
+                            "backgroundColor": "#26de81"
+                        }
+                    }
+                ],
+                "style": {}
+            }
+        ],
+        "activities": [
+            {
+                "id": "a101",
+                "title": "Changed Color",
+                "createdAt": 154514,
+                "byMember": {
+                    "_id": "u101",
+                    "fullname": "Abi Abambi",
+                    "imgUrl": "/img/user/gal.png"
+                },
+                "group": {
+                    "id": "g101",
+                    "title": "Urgent Stuff"
+                },
+                "task": {
+                    "id": "c101",
+                    "title": "Replace Logo"
+                }
+            }
+        ],
+        "cmpsOrder": [
+            "StatusPicker",
+            "MemberPicker",
+            "DatePicker"
+        ]
+    }
+]

@@ -1,0 +1,49 @@
+[
+    {
+        "username": "puki",
+        "fullname": "Puki Ja",
+        "password": "puki"
+    },
+    {
+        "username": "muki",
+        "fullname": "Muki Ba",
+        "password": "secret2"
+    },
+    {
+        "username": "kiki",
+        "password": "kiki",
+        "fullname": "Kiki Ki"
+    },
+    {
+        "username": "aaa",
+        "password": "aaa",
+        "fullname": "AA aa"
+    },
+    {
+        "username": "gugu",
+        "password": "gugu",
+        "fullname": "Gugu Ga"
+    },
+    {
+        "username": "mumu",
+        "password": "mumu",
+        "fullname": "Mumu Ma"
+    },
+    {
+        "username": "muki-new",
+        "fullname": "Muki Ba-New",
+        "password": "secret2222"
+    },
+    {
+        "username": "Gal",
+        "password": "Gal",
+        "fullname": "Gal Ben David",
+        "isAdmin": true
+    },
+    {
+        "username": "admin",
+        "password": "admin",
+        "fullname": "admin",
+        "isAdmin": true
+    }
+]
