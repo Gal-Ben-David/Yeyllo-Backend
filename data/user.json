@@ -1,49 +1,37 @@
 [
     {
-        "username": "puki",
-        "fullname": "Puki Ja",
-        "password": "puki"
+        "username": "Matan Odentz",
+        "fullname": "Matan Odentz",
+        "password": "123",
+        "imgUrl": "",
+        "isAdmin": true
     },
     {
-        "username": "muki",
-        "fullname": "Muki Ba",
-        "password": "secret2"
+        "username": "Ofer Koren",
+        "fullname": "Ofer Koren",
+        "password": "123",
+        "imgUrl": "",
+        "isAdmin": true
     },
     {
-        "username": "kiki",
-        "password": "kiki",
-        "fullname": "Kiki Ki"
-    },
-    {
-        "username": "aaa",
-        "password": "aaa",
-        "fullname": "AA aa"
-    },
-    {
-        "username": "gugu",
-        "password": "gugu",
-        "fullname": "Gugu Ga"
-    },
-    {
-        "username": "mumu",
-        "password": "mumu",
-        "fullname": "Mumu Ma"
-    },
-    {
-        "username": "muki-new",
-        "fullname": "Muki Ba-New",
-        "password": "secret2222"
-    },
-    {
-        "username": "Gal",
-        "password": "Gal",
+        "username": "Gal Ben David",
         "fullname": "Gal Ben David",
+        "password": "123",
+        "imgUrl": "",
         "isAdmin": true
     },
     {
-        "username": "admin",
-        "password": "admin",
-        "fullname": "admin",
-        "isAdmin": true
+        "username": "Batel Katiei",
+        "fullname": "Batel Katiei",
+        "password": "123",
+        "imgUrl": "",
+        "isAdmin": false
+    },
+    {
+        "username": "Risan Benichou",
+        "fullname": "Risan Benichou",
+        "password": "123",
+        "imgUrl": "",
+        "isAdmin": false
     }
 ]
