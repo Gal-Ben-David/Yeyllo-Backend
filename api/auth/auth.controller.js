@@ -19,13 +19,13 @@ export async function login(req, res) {
 
 export async function signup(req, res) {
     try {
-        const { username, password, fullname } = req.body
+        const { username, password, fullname, imgUrl } = req.body
 
         // IMPORTANT!!! 
         // Never write passwords to log file!!!
         // logger.debug(fullname + ', ' + username + ', ' + password)
 
-        const account = await authService.signup(username, password, fullname)
+        const account = await authService.signup(username, password, fullname, imgUrl)
         loggerService.debug(`auth.route - new account created: ` + JSON.stringify(account))
 
         const user = await authService.login(username, password)
