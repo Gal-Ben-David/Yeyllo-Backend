@@ -41,9 +41,16 @@ export async function addBoard(req, res) {
             members: req.body.members,
             groups: req.body.groups,
             activities: req.body.activities,
+            urls: req.body.urls,
             createdAt: Date.now()
         }
-        board.createdBy = loggedinUser
+        board.createdBy = loggedinUser ||
+        {
+            _id: 'u101',
+            fullname: 'Abi Abambi',
+            imgUrl: '/img/user/gal.png',
+        }
+
         const addedBoard = await boardService.add(board)
         res.send(addedBoard)
     } catch (err) {
