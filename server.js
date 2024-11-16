@@ -10,7 +10,7 @@ import { authRoutes } from './api/auth/auth.routes.js'
 import { userRoutes } from './api/user/user.routes.js'
 import { boardRoutes } from './api/board/board.routes.js'
 // import { reviewRoutes } from './api/review/review.routes.js'
-// import { setupSocketAPI } from './services/socket.service.js'
+import { setupSocketAPI } from './services/socket.service.js'
 import { loggerService } from './services/logger.service.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -22,11 +22,11 @@ const __dirname = dirname(__filename)
 loggerService.info('server.js loaded...')
 
 const app = express()
-// const server = http.createServer(app)
+const server = http.createServer(app)
 
 app.use(express.json()) //needed for the request bodies
 app.use(cookieParser())
-app.use(express.static('public'))
+// app.use(express.static('public'))
 
 if (process.env.NODE_ENV === 'production') {
     // Express serve static files on production environment
@@ -56,14 +56,14 @@ app.use('/api/user', userRoutes)
 // app.use('/api/review', reviewRoutes)
 app.use('/api/board', boardRoutes)
 
-// setupSocketAPI(server)
+setupSocketAPI(server)
 
 app.get('/**', (req, res) => {
     res.sendFile(path.resolve('public/index.html'))
 })
 
 const PORT = process.env.PORT || 3030
-app.listen(PORT, () =>
+server.listen(PORT, () =>
     loggerService.info(`Server listening on port http://127.0.0.1:${PORT}/`)
 )
 

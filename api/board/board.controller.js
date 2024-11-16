@@ -1,6 +1,7 @@
 import { boardService } from './board.service.js'
 import { loggerService } from '../../services/logger.service.js'
 import { authService } from '../auth/auth.service.js'
+import { socketService } from '../../services/socket.service.js'
 
 export async function getBoards(req, res) {
     try {
@@ -73,6 +74,10 @@ export async function updateBoard(req, res) {
             activities: req.body.activities
         }
         const updatedBoard = await boardService.update(board)
+
+        socketService.broadcast({ type: 'board-updated', data: updatedBoard, userId: 'u101' })
+        console.log('Broadcast called for board-updated')
+
         res.send(updatedBoard)
     } catch (err) {
         loggerService.error('Failed to update board', err)
