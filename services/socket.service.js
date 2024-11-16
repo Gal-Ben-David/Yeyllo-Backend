@@ -48,6 +48,14 @@ export function setupSocketAPI(http) {
             // Emit typing status to everyone except the sender
             socket.to(socket.myTopic).emit('chat-typing', data)
         })
+        socket.on('join-board', boardId => {
+            socket.join(boardId)// Join the specific board room
+            loggerService.info(`User with socket id ${socket.id} joined board ${boardId}`)
+        })
+        socket.on('leave-board', (boardId) => {
+            socket.leave(boardId)
+            loggerService.info(`User with socket id ${socket.id} left board ${boardId}`)
+        })
 
     })
 }

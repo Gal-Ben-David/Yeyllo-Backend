@@ -75,7 +75,7 @@ export async function updateBoard(req, res) {
         }
         const updatedBoard = await boardService.update(board)
 
-        socketService.broadcast({ type: 'board-updated', data: updatedBoard, userId: 'u101' })
+        socketService.broadcast({ type: 'board-updated', data: updatedBoard, room: board._id, userId: 'u101' })
         console.log('Broadcast called for board-updated')
 
         res.send(updatedBoard)
