@@ -23,7 +23,7 @@ async function login(username, password) {
     if (!match) throw new Error('Invalid username or password')
 
     delete user.password
-    console.log(user)
+    console.log('user', user)
     return user
 }
 
