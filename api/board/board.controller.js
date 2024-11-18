@@ -61,6 +61,8 @@ export async function addBoard(req, res) {
 }
 
 export async function updateBoard(req, res) {
+    const { loggedinUser } = req
+
     try {
         //optional: const toy = req.body
         const board = {
@@ -75,7 +77,13 @@ export async function updateBoard(req, res) {
         }
         const updatedBoard = await boardService.update(board)
 
-        socketService.broadcast({ type: 'board-updated', data: updatedBoard, room: board._id, userId: '6737239f06c9b704f496443a' })
+        socketService.broadcast({
+            type: 'board-updated', data: updatedBoard, room: board._id, userId: loggedinUser?._id || {
+                _id: '6737239f06c9b704f496443a',
+                fullname: 'Abi Abambi',
+                imgUrl: '/img/user/gal.png',
+            }
+        })
         console.log('Broadcast called for board-updated')
 
         res.send(updatedBoard)

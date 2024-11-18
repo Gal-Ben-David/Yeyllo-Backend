@@ -95,8 +95,6 @@ async function update(board) {
 			urls: board.urls
 		}
 
-		console.log('board', board)
-
 		const criteria = { _id: ObjectId.createFromHexString(board._id) }
 		const collection = await dbService.getCollection('board')
 		await collection.updateOne(criteria, { $set: updatedBoard })
@@ -114,10 +112,16 @@ async function findByIdAndUpdate(boardId, activity) {
 	try {
 
 		const collection = await dbService.getCollection('board')
-		console.log('activity', activity)
 
 		const criteria = { _id: ObjectId.createFromHexString(boardId) }
-		await collection.updateOne(criteria, { $push: { activities: activity } })
+		await collection.updateOne(criteria, {
+			$push: {
+				activities: {
+					$each: [activity],
+					$position: 0
+				}
+			}
+		})
 
 	} catch (err) {
 		console.error('Failed to update board', err)
