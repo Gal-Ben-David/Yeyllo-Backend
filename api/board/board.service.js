@@ -11,6 +11,7 @@ export const boardService = {
 	getById,
 	add,
 	update,
+	findByIdAndUpdate
 	// addToyMsg,
 	// removeToyMsg,
 }
@@ -83,7 +84,6 @@ async function add(board) {
 }
 
 async function update(board) {
-	const { boardId } = board._id
 	try {
 		const updatedBoard = {
 			title: board.title,
@@ -92,13 +92,35 @@ async function update(board) {
 			labels: board.labels,
 			members: board.members,
 			groups: board.groups,
-			activities: board.activities
+			urls: board.urls
 		}
+
+		console.log('board', board)
+
+		const criteria = { _id: ObjectId.createFromHexString(board._id) }
 		const collection = await dbService.getCollection('board')
-		await collection.updateOne({ _id: ObjectId.createFromHexString(board._id) }, { $set: updatedBoard })
-		return board
+		await collection.updateOne(criteria, { $set: updatedBoard })
+
+		const boardAfter = await collection.findOne({ _id: ObjectId.createFromHexString(board._id) })
+
+		return boardAfter
 	} catch (err) {
-		loggerService.error(`cannot update toy ${boardId}`, err)
+		loggerService.error(`cannot update board ${board._id}`, err)
+		throw err
+	}
+}
+
+async function findByIdAndUpdate(boardId, activity) {
+	try {
+
+		const collection = await dbService.getCollection('board')
+		console.log('activity', activity)
+
+		const criteria = { _id: ObjectId.createFromHexString(boardId) }
+		await collection.updateOne(criteria, { $push: { activities: activity } })
+
+	} catch (err) {
+		console.error('Failed to update board', err)
 		throw err
 	}
 }

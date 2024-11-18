@@ -47,7 +47,7 @@ export async function addBoard(req, res) {
         }
         board.createdBy = loggedinUser ||
         {
-            _id: 'u101',
+            _id: '6737239f06c9b704f496443a',
             fullname: 'Abi Abambi',
             imgUrl: '/img/user/gal.png',
         }
@@ -71,7 +71,7 @@ export async function updateBoard(req, res) {
             labels: req.body.labels,
             members: req.body.members,
             groups: req.body.groups,
-            activities: req.body.activities
+            urls: req.body.urls
         }
         const updatedBoard = await boardService.update(board)
 
@@ -93,6 +93,23 @@ export async function removeBoard(req, res) {
     } catch (err) {
         loggerService.error('Failed to remove board', err)
         res.status(500).send({ err: 'Failed to remove board' })
+    }
+}
+
+export async function addActivity(req, res) {
+    try {
+        const activity = req.body
+
+        console.log('req.body', req.body)
+        const updatedBoard = await boardService.findByIdAndUpdate(activity.boardId, activity)
+
+        // Emit socket notification if needed
+        // emitToRoom({ type: 'board-updated', data: updatedBoard, room: boardId })
+
+        res.json(updatedBoard)
+    } catch (err) {
+        console.error('Failed to add activity', err)
+        res.status(500).send({ error: 'Failed to add activity' })
     }
 }
 
