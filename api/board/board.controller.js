@@ -73,7 +73,8 @@ export async function updateBoard(req, res) {
             labels: req.body.labels,
             members: req.body.members,
             groups: req.body.groups,
-            urls: req.body.urls
+            urls: req.body.urls,
+            isClosed: req.body.isClosed
         }
         const updatedBoard = await boardService.update(board)
 
