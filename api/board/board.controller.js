@@ -44,10 +44,9 @@ export async function addBoard(req, res) {
             groups: req.body.groups,
             activities: req.body.activities,
             urls: req.body.urls,
-            createdAt: Date.now()
+            createdAt: Date.now(),
         }
-        board.createdBy = loggedinUser ||
-        {
+        board.createdBy = loggedinUser || {
             _id: '6737239f06c9b704f496443a',
             fullname: 'Abi Abambi',
             imgUrl: '/img/user/gal.png',
@@ -75,16 +74,19 @@ export async function updateBoard(req, res) {
             members: req.body.members,
             groups: req.body.groups,
             urls: req.body.urls,
-            isClosed: req.body.isClosed
+            isClosed: req.body.isClosed,
         }
         const updatedBoard = await boardService.update(board)
 
         socketService.broadcast({
-            type: 'board-updated', data: updatedBoard, room: board._id, userId: loggedinUser?._id || {
+            type: 'board-updated',
+            data: updatedBoard,
+            room: board._id,
+            userId: loggedinUser?._id || {
                 _id: '6737239f06c9b704f496443a',
                 fullname: 'Abi Abambi',
                 imgUrl: '/img/user/gal.png',
-            }
+            },
         })
         console.log('Broadcast called for board-updated')
 
@@ -120,15 +122,20 @@ export async function addActivity(req, res) {
     }
 }
 
-
 export async function generateAiBoard(req, res) {
     const { topic, urls } = req.body
-    try {
+    const firstUrl = JSON.stringify(urls.shift(), null, 2)
 
+    const strinfiedUrls = JSON.stringify(
+        urls.map((url) => url.small),
+        null,
+        2
+    )
+    try {
         const prompt = `Create a task board for the topic: ${topic}. The board should have the following structure:
         *please 3 groups, each group should has 4 or 3 tasks with different titles for each task and group
         each group and task should has a unique id, 
-        for some task please replace the backgroundColor key in style with backgroundImage. put in the backgroundImage an image url (medium quality of image) from: https://images.unsplash.com/. 
+        for some task please replace the backgroundColor key in style with backgroundImage. put in the backgroundImage an image url from this array: ${strinfiedUrls}  
         please pick random color from the following object for the backgroundColor in the key style in group.
         
         groupColorPalette = [
@@ -153,8 +160,7 @@ const defaultLabels = [
     { id: 'l106', color: '#579DFF', fontColor: '#09326c', title: '' },
 ]
 
-we put an empty url() im backgroundImage field, please fill the url with image url (medium quality of image) from: https://images.unsplash.com/ that related to the topic
-    
+we put an empty url() in backgroundImage field, please fill the url with image url from this array: ${strinfiedUrls} 
     {
         title: choose a title related to the topic,
         isStarred: false,
@@ -234,9 +240,8 @@ we put an empty url() im backgroundImage field, please fill the url with image u
             ]
            }],
     activities: [],
-    urls: {
-        regular: 'https://res.cloudinary.com/dkckt1l7i/image/upload/v1731148742/gradiant-rainbow_phdwu0.svg'}
-     }
+   
+     urls : ${firstUrl}
 
         Please format your response as JSON.`
 
@@ -245,14 +250,13 @@ we put an empty url() im backgroundImage field, please fill the url with image u
             messages: [{ role: 'user', content: prompt }],
         })
 
-        let boardStructure;
+        let boardStructure
         try {
             boardStructure = JSON.parse(response.choices[0].message.content)
         } catch (error) {
             console.error('Failed to parse AI response:', error)
             return res.status(500).json({ success: false, error: 'Invalid board structure generated' })
         }
-
 
         boardStructure.createdAt = Date.now()
         boardStructure.createdBy = {
@@ -264,7 +268,7 @@ we put an empty url() im backgroundImage field, please fill the url with image u
 
         res.json(addedAiBoard)
     } catch (error) {
-        console.error('Error generating board:', error);
+        console.error('Error generating board:', error)
         res.status(500).json({ success: false, error: 'Failed to generate board' })
     }
 }

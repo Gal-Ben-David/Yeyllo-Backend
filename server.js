@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
 dotenv.config({
-    path: '.env' //give .env file location
+    path: '.env', //give .env file location
 })
 
 const genAI = new OpenAI({
@@ -43,7 +43,7 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.resolve('public')))
 } else {
     // Configuring CORS
-    // Make sure origin contains the url 
+    // Make sure origin contains the url
     // your frontend dev-server is running on
     const corsOptions = {
         origin: [
@@ -54,7 +54,7 @@ if (process.env.NODE_ENV === 'production') {
             'http://127.0.0.1:3030',
             'http://localhost:3030',
         ],
-        credentials: true
+        credentials: true,
     }
     app.use(cors(corsOptions))
 }
@@ -72,9 +72,7 @@ app.get('/**', (req, res) => {
 })
 
 const PORT = process.env.PORT || 3030
-server.listen(PORT, () =>
-    loggerService.info(`Server listening on port http://127.0.0.1:${PORT}/`)
-)
+server.listen(PORT, () => loggerService.info(`Server listening on port http://127.0.0.1:${PORT}/`))
 
 // REST API for Toys
 // app.get('/api/toy', (req, res) => {
