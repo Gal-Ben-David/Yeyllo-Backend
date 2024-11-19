@@ -122,20 +122,157 @@ export async function addActivity(req, res) {
 
 
 export async function generateAiBoard(req, res) {
-    const { topic } = req.body
+    const { topic, urls } = req.body
     try {
 
-        //         const prompt = `
-        // Create a JSON object for a task board titled "${topic}" with the following structure:
-        // - isStarred: boolean
-        // - style: { backgroundColor: "lightblue" }
-        // - labels: array of objects with id, title, color
-        // - members: array of objects with _id, fullname, imgUrl, isAdmin
-        // - groups: array of objects with id, title, and tasks (each task includes id, title, description, members, labelIds, membersIds, dueDate, and checklists)
-        // - activities: empty array
-        // - urls: { regular: "https://res.cloudinary.com/dkckt1l7i/image/upload/v1731148742/gradiant-rainbow_phdwu0.svg" }
-        // Format the response as JSON only.`
-        const prompt = `Create a task board for the topic "${topic}". The board should have the following structure:
+        const prompt = `Create a task board for the topic: ${topic}. The board should have the following structure:
+        *please 3 groups, each group should has 4 or 3 tasks with different titles for each task and group
+        each group and task should has a unique id, 
+        for some task please replace the backgroundColor key in style with backgroundImage. put in the backgroundImage an image url (medium quality of image) from: https://images.unsplash.com/. 
+        please pick random color from the following object for the backgroundColor in the key style in group.
+        
+        groupColorPalette = [
+    { realColor: '#BAF3DB'},
+    { realColor: '#F8E6A0'},
+    {  realColor: '#FEDEC8'},
+    { realColor: '#FFD5D2'},
+    {  realColor: '#DFD8FD'},
+    {  realColor: '#CCE0FF'},
+    {  realColor: '#C6EDFB'},
+    { realColor: '#D3F1A7'},
+    {  realColor: '#FDD0EC'}
+]
+
+  please pick random color from the following object for the backgroundColor in the key style in task.
+const defaultLabels = [
+    { id: 'l101', color: '#4BCE97', fontColor: '#164b35', title: '' },
+    { id: 'l102', color: '#F5CD47', fontColor: '#533f04', title: '' },
+    { id: 'l103', color: '#FEA362', fontColor: '#702e00', title: '' },
+    { id: 'l104', color: '#F87168', fontColor: '#5d1f1a', title: '' },
+    { id: 'l105', color: '#9F8FEF', fontColor: '#352c63', title: '' },
+    { id: 'l106', color: '#579DFF', fontColor: '#09326c', title: '' },
+]
+
+we put an empty url() im backgroundImage field, please fill the url with image url (medium quality of image) from: https://images.unsplash.com/ that related to the topic
+    
+    {
+        title: choose a title related to the topic,
+        isStarred: false,
+        createdBy: {
+            _id: '6737239f06c9b704f4964438',
+            fullname: 'Matan Odentz',
+            imgUrl: '/img/user/team-matan.png',
+             isAdmin: true
+         },
+         style: {
+             backgroundImage: 'url()',
+         },
+         labels: [
+             {
+                 id: 'l101',
+                 title: 'Done',
+                 color: '#4BCE97',
+             },
+             {
+                 id: 'l102',
+                 title: 'Progress',
+                 color: '#F5CD47',
+             },
+         ],
+        members: [
+            {
+                _id: '6737239f06c9b704f4964438',
+                fullname: 'Matan Odentz',
+                imgUrl: '/img/user/team-matan.png',
+                isAdmin: true
+            },
+            {
+                _id: '6737239f06c9b704f4964439',
+                fullname: 'Ofer Koren',
+                imgUrl: '/img/user/team-ofer.png',
+                isAdmin: true
+            },
+            {
+                _id: '6737239f06c9b704f496443a',
+                fullname: 'Gal Ben David',
+                imgUrl: '/img/user/gal.png',
+                 isAdmin: true
+             }
+         ],
+         groups: [
+             {
+                 id: enter id in format: 'idxxxxx',
+                 title: choose a title related to the topic,
+                 style: {backgroundColor: "#BAF3DB" }
+                 tasks: [
+                     {
+                         id: enter id in format: 'idxxxxx',
+                         title: choose a title related to the topic,
+                         coverSize: 'half',
+                         status: 'inProgress',
+                         dueDate: '2024-12-06',
+                         description:  choose a description related to the topic,
+                         checklists: [
+                             {
+                                 id: enter id in format: 'idxxxxx',
+                                 title:  choose a title related to the topic,
+                                 todos: [
+                                     {
+                                         id: enter id in format: 'idxxxxx',
+                                         title: choose a title related to the topic,
+                                         isDone: false,
+                                     },
+                                 ],
+                             },
+                        ],
+                        memberIds: ['6737239f06c9b704f496443a'],
+                        labelIds: ['l101', 'l102'],
+                        style: {
+                        backgroundColor: '#F5CD47',
+                        }
+                    }
+            ]
+           }],
+    activities: [],
+    urls: {
+        regular: 'https://res.cloudinary.com/dkckt1l7i/image/upload/v1731148742/gradiant-rainbow_phdwu0.svg'}
+     }
+
+        Please format your response as JSON.`
+
+        const response = await genAI.chat.completions.create({
+            model: 'gpt-3.5-turbo', // or gpt-3.5-turbo
+            messages: [{ role: 'user', content: prompt }],
+        })
+
+        let boardStructure;
+        try {
+            boardStructure = JSON.parse(response.choices[0].message.content)
+        } catch (error) {
+            console.error('Failed to parse AI response:', error)
+            return res.status(500).json({ success: false, error: 'Invalid board structure generated' })
+        }
+
+
+        boardStructure.createdAt = Date.now()
+        boardStructure.createdBy = {
+            _id: '6737239f06c9b704f496443a',
+            fullname: 'Gal Ben David',
+            imgUrl: '/img/user/gal.png',
+        }
+        const addedAiBoard = await boardService.add(boardStructure)
+
+        res.json(addedAiBoard)
+    } catch (error) {
+        console.error('Error generating board:', error);
+        res.status(500).json({ success: false, error: 'Failed to generate board' })
+    }
+}
+
+/*
+
+
+
         - A title (e.g., "Project Board")
         - A boolean field indicating if it's starred (e.g., isStarred: false)
         - A style field for the background color (e.g., style: { backgroundImage: url(https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w2NzM1Nzl8MHwxfHNlYXJjaHwxfHxzZWF8ZW58MHx8fHwxNzMyMDEwNTQ4fDA&ixlib=rb-4.0.3&q=85)})
@@ -187,34 +324,4 @@ export async function generateAiBoard(req, res) {
         - An empty array for activities (e.g., activities: [])
         - A key urls with object for the board's image (e.g., urls: {
         regular: 'https://res.cloudinary.com/dkckt1l7i/image/upload/v1731148742/gradiant-rainbow_phdwu0.svg'})
-
-        Please format your response as JSON.`
-
-        const response = await genAI.chat.completions.create({
-            model: 'gpt-3.5-turbo', // or gpt-3.5-turbo
-            messages: [{ role: 'user', content: prompt }],
-        })
-
-        let boardStructure;
-        try {
-            boardStructure = JSON.parse(response.choices[0].message.content)
-        } catch (error) {
-            console.error('Failed to parse AI response:', error)
-            return res.status(500).json({ success: false, error: 'Invalid board structure generated' })
-        }
-
-
-        boardStructure.createdAt = Date.now()
-        boardStructure.createdBy = {
-            _id: '6737239f06c9b704f496443a',
-            fullname: 'Gal Ben David',
-            imgUrl: '/img/user/gal.png',
-        }
-        const addedAiBoard = await boardService.add(boardStructure)
-
-        res.json(addedAiBoard)
-    } catch (error) {
-        console.error('Error generating board:', error);
-        res.status(500).json({ success: false, error: 'Failed to generate board' })
-    }
-}
+*/
