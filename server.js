@@ -2,7 +2,8 @@ import http from 'http'
 import cors from 'cors'
 import express from 'express'
 import cookieParser from 'cookie-parser'
-
+import dotenv from 'dotenv'
+import OpenAI from 'openai'
 import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -16,8 +17,16 @@ import { loggerService } from './services/logger.service.js'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
-// import { toyService } from './services/toy.service.js'
-// import { userService } from './services/user.service.js'
+dotenv.config({
+    path: '.env' //give .env file location
+})
+
+const genAI = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+})
+console.log('genAI', process.env.OPENAI_API_KEY)
+
+export default genAI
 
 loggerService.info('server.js loaded...')
 
