@@ -134,9 +134,15 @@ export async function generateAiBoard(req, res) {
 
     try {
         const prompt = `Create a task board for the topic: ${topic}. The board should have the following structure:
-        *please 3 groups, each group should has 4 or 3 tasks with different titles for each task and group
+        *please 4 groups, each group should has 4 or 6 tasks with different titles for each task and group
         each group and task should has a unique id, 
-        for some task please replace the backgroundColor key in style with backgroundImage. put in the backgroundImage an image url from this array: ${stringifiedUrls}  
+        for some task please replace the backgroundColor key in style with backgroundImage like this: style.backgroundImage = {
+        { url, bgColor: #ffffff, imgId, source: 'fromAttach', isCover: false }
+        } 
+        put in the backgroundImage.url an image url from this array:${stringifiedUrls} and put inside the brackets url()
+        the final result for the backgroundImage.url for task is: backgroundImage.url: url(here the url you picked from ${stringifiedUrls})
+        In imgId random a unique id.
+
         please pick random color from the following object for the backgroundColor in the key style in group.
         
         groupColorPalette = [
