@@ -124,18 +124,19 @@ export async function addActivity(req, res) {
 
 export async function generateAiBoard(req, res) {
     const { topic, urls } = req.body
-    const firstUrl = JSON.stringify(urls.shift(), null, 2)
+    const firstUrl = urls.shift()
 
-    const strinfiedUrls = JSON.stringify(
+    const stringifiedUrls = JSON.stringify(
         urls.map((url) => url.small),
         null,
         2
     )
+
     try {
         const prompt = `Create a task board for the topic: ${topic}. The board should have the following structure:
         *please 3 groups, each group should has 4 or 3 tasks with different titles for each task and group
         each group and task should has a unique id, 
-        for some task please replace the backgroundColor key in style with backgroundImage. put in the backgroundImage an image url from this array: ${strinfiedUrls}  
+        for some task please replace the backgroundColor key in style with backgroundImage. put in the backgroundImage an image url from this array: ${stringifiedUrls}  
         please pick random color from the following object for the backgroundColor in the key style in group.
         
         groupColorPalette = [
@@ -160,88 +161,80 @@ const defaultLabels = [
     { id: 'l106', color: '#579DFF', fontColor: '#09326c', title: '' },
 ]
 
-we put an empty url() in backgroundImage field, please fill the url with image url from this array: ${strinfiedUrls} 
-    {
-        title: choose a title related to the topic,
-        isStarred: false,
-        createdBy: {
+we put an empty url() in backgroundImage field, please fill the url with image url from this array: ${stringifiedUrls} 
+
+make sure the returned object includes the following keys: title, isStarred, labels, members, groups, activities
+{
+    title: 'choose a title related to the topic',
+    isStarred: false,
+    labels: [
+        {
+            id: 'l101',
+            title: 'Done',
+            color: '#4BCE97',
+        },
+        {
+            id: 'l102',
+            title: 'Progress',
+            color: '#F5CD47',
+        },
+    ],
+    members: [
+        {
             _id: '6737239f06c9b704f4964438',
             fullname: 'Matan Odentz',
             imgUrl: '/img/user/team-matan.png',
-             isAdmin: true
-         },
-         style: {
-             backgroundImage: 'url()',
-         },
-         labels: [
-             {
-                 id: 'l101',
-                 title: 'Done',
-                 color: '#4BCE97',
-             },
-             {
-                 id: 'l102',
-                 title: 'Progress',
-                 color: '#F5CD47',
-             },
-         ],
-        members: [
-            {
-                _id: '6737239f06c9b704f4964438',
-                fullname: 'Matan Odentz',
-                imgUrl: '/img/user/team-matan.png',
-                isAdmin: true
-            },
-            {
-                _id: '6737239f06c9b704f4964439',
-                fullname: 'Ofer Koren',
-                imgUrl: '/img/user/team-ofer.png',
-                isAdmin: true
-            },
-            {
-                _id: '6737239f06c9b704f496443a',
-                fullname: 'Gal Ben David',
-                imgUrl: '/img/user/gal.png',
-                 isAdmin: true
-             }
-         ],
-         groups: [
-             {
-                 id: enter id in format: 'idxxxxx',
-                 title: choose a title related to the topic,
-                 style: {backgroundColor: "#BAF3DB" }
-                 tasks: [
-                     {
-                         id: enter id in format: 'idxxxxx',
-                         title: choose a title related to the topic,
-                         coverSize: 'half',
-                         status: 'inProgress',
-                         dueDate: '2024-12-06',
-                         description:  choose a description related to the topic,
-                         checklists: [
-                             {
-                                 id: enter id in format: 'idxxxxx',
-                                 title:  choose a title related to the topic,
-                                 todos: [
-                                     {
-                                         id: enter id in format: 'idxxxxx',
-                                         title: choose a title related to the topic,
-                                         isDone: false,
-                                     },
-                                 ],
-                             },
-                        ],
-                        memberIds: ['6737239f06c9b704f496443a'],
-                        labelIds: ['l101', 'l102'],
-                        style: {
+            isAdmin: true
+        },
+        {
+            _id: '6737239f06c9b704f4964439',
+            fullname: 'Ofer Koren',
+            imgUrl: '/img/user/team-ofer.png',
+            isAdmin: true
+        },
+        {
+            _id: '6737239f06c9b704f496443a',
+            fullname: 'Gal Ben David',
+            imgUrl: '/img/user/gal.png',
+            isAdmin: true
+        }
+    ],
+    groups: [
+        {
+            id: enter id in format: 'idxxxxx',
+            title: choose a title related to the topic,
+            style: { backgroundColor: "#BAF3DB" },
+            tasks: [
+                {
+                    id: enter id in format: 'idxxxxx',
+                    title: choose a title related to the topic,
+                    coverSize: 'half',
+                    status: 'inProgress',
+                    dueDate: '2024-12-06',
+                    description: choose a description related to the topic,
+                    checklists: [
+                        {
+                            id: enter id in format: 'idxxxxx',
+                            title: choose a title related to the topic,
+                            todos: [
+                                {
+                                    id: enter id in format: 'idxxxxx',
+                                    title: choose a title related to the topic,
+                                    isDone: false,
+                                },
+                            ],
+                        },
+                    ],
+                    memberIds: ['6737239f06c9b704f496443a'],
+                    labelIds: ['l101', 'l102'],
+                    style: {
                         backgroundColor: '#F5CD47',
-                        }
                     }
+                }
             ]
-           }],
+        }],
     activities: [],
-   
-     urls : ${firstUrl}
+}
 
         Please format your response as JSON.`
 
@@ -249,6 +242,8 @@ we put an empty url() in backgroundImage field, please fill the url with image u
             model: 'gpt-3.5-turbo', // or gpt-3.5-turbo
             messages: [{ role: 'user', content: prompt }],
         })
+
+        console.log('response', response.choices[0].message.content)
 
         let boardStructure
         try {
@@ -264,6 +259,8 @@ we put an empty url() in backgroundImage field, please fill the url with image u
             fullname: 'Gal Ben David',
             imgUrl: '/img/user/gal.png',
         }
+        boardStructure.urls = firstUrl
+        boardStructure.style = { backgroundImage: `url(${firstUrl.regular})` }
         const addedAiBoard = await boardService.add(boardStructure)
 
         res.json(addedAiBoard)
