@@ -170,6 +170,7 @@ export async function generateAiBoard(req, res) {
         we put an empty url() in backgroundImage field, please fill the url with image url from this array: ${stringifiedUrls} 
 
         make sure the returned object includes the following keys: title, isStarred, labels, members, groups, activities
+        in each task please put in the members array one or more members from the board's members array, randomly.
         {
             title: 'choose a title related to the topic',
             isStarred: false,
