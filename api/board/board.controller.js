@@ -48,7 +48,7 @@ export async function addBoard(req, res) {
         }
         board.createdBy = loggedinUser || {
             _id: '6737239f06c9b704f496443a',
-            fullname: 'Abi Abambi',
+            fullname: 'Gal Ben David',
             imgUrl: '/img/user/gal.png',
         }
 
