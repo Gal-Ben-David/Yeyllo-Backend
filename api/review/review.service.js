@@ -48,23 +48,6 @@ async function query(filterBy = {}) {
             },
         ]).toArray()
 
-        console.log('reviewfromservice', reviews)
-
-        // reviews = reviews.map(review => {
-        //     review.byUser = {
-        //         _id: review.byUser._id,
-        //         fullname: review.byUser.fullname
-        //     }
-        // review.aboutUser = {
-        //     _id: review.aboutUser._id,
-        //     fullname: review.aboutUser.fullname
-        // }
-        //     review.createdAt = review._id.getTimestamp()
-        //     delete review.byUserId
-        //     // delete review.aboutUserId
-        //     return review
-        // })
-
         return reviews
     } catch (err) {
         loggerService.error('cannot get reviews', err)
@@ -121,6 +104,5 @@ function _buildCriteria(filterBy) {
     if (filterBy.aboutToyId) {
         criteria.toyId = ObjectId.createFromHexString(filterBy.aboutToyId)
     }
-    console.log('criteria:', criteria)
     return criteria
 }

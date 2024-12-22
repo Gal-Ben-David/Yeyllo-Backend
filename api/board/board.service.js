@@ -12,35 +12,11 @@ export const boardService = {
     add,
     update,
     findByIdAndUpdate,
-    // addToyMsg,
-    // removeToyMsg,
 }
 
 async function query(filterBy = {}) {
     try {
-        // const criteria = {
-        // 	name: { $regex: filterBy.name, $options: 'i' },
-        // }
-        // if (filterBy.labels && filterBy.labels.length > 0) {
-        // 	criteria.labels = { $in: filterBy.labels }
-        // }
-        // if (filterBy.price !== 0) {
-        // 	criteria.price = { $lte: filterBy.price }
-        // }
-        // if (filterBy.inStock !== 'all') {
-        // 	criteria.inStock = (filterBy.inStock === 'available')
-        // }
-
-        // let sortOption = {}
-        // if (filterBy.selector === 'name') {
-        // 	sortOption = { name: 1 }
-        // } else if (filterBy.selector === 'price') {
-        // 	sortOption = { price: 1 }
-        // } else if (filterBy.selector === 'createdAt') {
-        // 	sortOption = { createdAt: 1 }
-        // }
         const collection = await dbService.getCollection('board')
-        // var toys = await collection.find(criteria).sort(sortOption).toArray()
         var boards = await collection.find().toArray()
         return boards
     } catch (err) {
@@ -127,27 +103,3 @@ async function findByIdAndUpdate(boardId, activity) {
         throw err
     }
 }
-
-// async function addBoardMsg(toyId, msg) {
-// 	try {
-// 		msg.id = utilService.makeId()
-
-// 		const collection = await dbService.getCollection('toys')
-// 		await collection.updateOne({ _id: ObjectId.createFromHexString(toyId) }, { $push: { msgs: msg } })
-// 		return msg
-// 	} catch (err) {
-// 		loggerService.error(`cannot add toy msg ${toyId}`, err)
-// 		throw err
-// 	}
-// }
-
-// async function removeToyMsg(toyId, msgId) {
-// 	try {
-// 		const collection = await dbService.getCollection('toys')
-// 		await collection.updateOne({ _id: ObjectId.createFromHexString(toyId) }, { $pull: { msgs: { id: msgId } } })
-// 		return msgId
-// 	} catch (err) {
-// 		loggerService.error(`cannot add toy msg ${toyId}`, err)
-// 		throw err
-// 	}
-// }

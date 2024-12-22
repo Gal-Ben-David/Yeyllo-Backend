@@ -13,5 +13,4 @@ userRoutes.get('/:id', getUser)
 userRoutes.put('/:id', updateUser)
 userRoutes.post('/', addUser)
 
-// userRoutes.put('/:id',  requireAuth, updateUser)
 userRoutes.delete('/:id', requireAuth, requireAdmin, deleteUser)

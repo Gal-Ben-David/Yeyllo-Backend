@@ -6,13 +6,6 @@ import genAI from '../../server.js'
 
 export async function getBoards(req, res) {
     try {
-        // const filterBy = {
-        //     name: req.query.name || '',
-        //     price: +req.query.price || 0,
-        //     labels: req.query.labels || [],
-        //     inStock: req.query.inStock || 'all',
-        //     selector: req.query.selector || '',
-        // }
         const boards = await boardService.query()
         res.send(boards)
     } catch (err) {
@@ -111,8 +104,6 @@ export async function removeBoard(req, res) {
 export async function addActivity(req, res) {
     try {
         const activity = req.body
-
-        console.log('req.body', req.body)
         const updatedBoard = await boardService.findByIdAndUpdate(activity.boardId, activity)
 
         res.json(updatedBoard)

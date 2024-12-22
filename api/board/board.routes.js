@@ -22,8 +22,3 @@ boardRoutes.delete('/:id', removeBoard)
 // boardRoutes.post('/', requireAuth, requireAdmin, addBoard)
 // boardRoutes.put('/:id', requireAuth, requireAdmin, updateBoard)
 // boardRoutes.delete('/:id', requireAuth, requireAdmin, removeBoard)
-
-// router.delete('/:id', requireAuth, requireAdmin, removeToy)
-
-// toyRoutes.post('/:id/msg', requireAuth, addToyMsg)
-// toyRoutes.delete('/:id/msg/:msgId', requireAuth, removeToyMsg)
