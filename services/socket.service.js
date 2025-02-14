@@ -9,27 +9,11 @@ export function setupSocketAPI(http) {
             origin: '*',
         }
     })
+
     gIo.on('connection', socket => {
         loggerService.info(`New connected socket [id: ${socket.id}]`)
         socket.on('disconnect', socket => {
             loggerService.info(`Socket disconnected [id: ${socket.id}]`)
-        })
-        socket.on('chat-set-topic', topic => {
-            console.log('socket.myTopic', socket.myTopic)
-            if (socket.myTopic === topic) return
-            if (socket.myTopic) {
-                socket.leave(socket.myTopic)
-                loggerService.info(`Socket is leaving topic ${socket.myTopic} [id: ${socket.id}]`)
-            }
-            socket.join(topic)
-            socket.myTopic = topic
-        })
-        socket.on('chat-send-msg', msg => {
-            loggerService.info(`New chat msg from socket [id: ${socket.id}], emitting to topic ${socket.myTopic}`)
-            // emits to all sockets:
-            // gIo.emit('chat addMsg', msg)
-            // emits only to sockets in the same room
-            gIo.to(socket.myTopic).emit('chat-add-msg', msg)
         })
         socket.on('user-watch', userId => {
             loggerService.info(`user-watch from socket [id: ${socket.id}], on user ${userId}`)
@@ -42,11 +26,6 @@ export function setupSocketAPI(http) {
         socket.on('unset-user-socket', () => {
             loggerService.info(`Removing socket.userId for socket [id: ${socket.id}]`)
             delete socket.userId
-        })
-        socket.on('chat-typing', (data) => {
-            if (data.topic !== socket.myTopic) return
-            // Emit typing status to everyone except the sender
-            socket.to(socket.myTopic).emit('chat-typing', data)
         })
         socket.on('join-board', boardId => {
             socket.join(boardId)// Join the specific board room

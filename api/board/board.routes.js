@@ -12,7 +12,7 @@ boardRoutes.get('/', log, getBoards)
 boardRoutes.get('/:id', getBoardById)
 boardRoutes.post('/', addBoard)
 boardRoutes.post('/:id/activity', addActivity)
-boardRoutes.post('/generate-board', generateAiBoard)
+boardRoutes.post('/generate-board', requireAuth, generateAiBoard)
 boardRoutes.put('/:id', updateBoard)
 boardRoutes.delete('/:id', removeBoard)
 

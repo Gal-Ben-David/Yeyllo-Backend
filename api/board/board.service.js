@@ -2,8 +2,6 @@ import { ObjectId } from 'mongodb'
 
 import { dbService } from '../../services/db.service.js'
 import { loggerService } from '../../services/logger.service.js'
-import { authService } from '../auth/auth.service.js'
-import { utilService } from '../../services/util.service.js'
 
 export const boardService = {
     remove,
@@ -89,7 +87,7 @@ async function findByIdAndUpdate(boardId, activity) {
     try {
         const collection = await dbService.getCollection('board')
 
-        const criteria = { _id: ObjectId.createFromHexString(boardId) }
+        const criteria = { _id: typeof boardId === 'string' ? ObjectId.createFromHexString(boardId) : boardId }
         await collection.updateOne(criteria, {
             $push: {
                 activities: {

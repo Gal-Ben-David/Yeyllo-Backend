@@ -4,8 +4,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import OpenAI from 'openai'
-import path, { dirname } from 'path'
-import { fileURLToPath } from 'url'
+import path from 'path'
 
 import { authRoutes } from './api/auth/auth.routes.js'
 import { userRoutes } from './api/user/user.routes.js'
@@ -13,11 +12,8 @@ import { boardRoutes } from './api/board/board.routes.js'
 import { setupSocketAPI } from './services/socket.service.js'
 import { loggerService } from './services/logger.service.js'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
 dotenv.config({
-    path: '.env', //give .env file location
+    path: '.env',
 })
 
 const genAI = new OpenAI({
@@ -37,7 +33,6 @@ app.use(cookieParser())
 
 if (process.env.NODE_ENV === 'production') {
     // Express serve static files on production environment
-    // app.use(express.static(path.resolve(__dirname, 'public')))
     app.use(express.static(path.resolve('public')))
 } else {
     // Configuring CORS
