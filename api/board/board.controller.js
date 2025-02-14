@@ -130,12 +130,11 @@ export async function generateAiBoard(req, res) {
                 - please 4 groups, each group should has 4 or 6 tasks with different titles for each task and group
                 each group and task should has a unique id. 
                 - For some task object please replace the 'backgroundColor' key in the style field with backgroundImage in this format: 
-                style.backgroundImage = {
-                { 
-                url: url(), bgColor: #ffffff, imgId, source: 'fromAttach', isCover: false }
-                } 
-                for the task with backgroundImage key in style field, put an image url from this array:${stringifiedUrls} inside the empty brackets of the url key.
-                The final result for the backgroundImage.url for task is: backgroundImage.url: url(here the url you picked from ${stringifiedUrls})
+                style: {
+                backgroundImage = { url: url(), bgColor: #ffffff, imgId, source: 'fromAttach', isCover: false }
+                }
+                for the task with 'backgroundImage' key in style, insert an image url from this array:${stringifiedUrls} into the brackets of the url,
+                the final result for the backgroundImage.url for task is: backgroundImage.url: url(here the url you picked from ${stringifiedUrls})
                 In imgId random a unique id.
 
                 please pick random color from the following object for the backgroundColor in the key style in group.
@@ -154,15 +153,16 @@ export async function generateAiBoard(req, res) {
 
           please pick random color from the following object for the backgroundColor in the key style in task.
         const defaultLabels = [
-            { id: 'l101', color: '#4BCE97' },
-            { id: 'l102', color: '#F5CD47' },
-            { id: 'l103', color: '#FEA362' },
-            { id: 'l104', color: '#F87168' },
-            { id: 'l105', color: '#9F8FEF' },
-            { id: 'l106', color: '#579DFF' },
+            { id: 'l101', color: '#4BCE97', fontColor: '#164b35', title: '' },
+            { id: 'l102', color: '#F5CD47', fontColor: '#533f04', title: '' },
+            { id: 'l103', color: '#FEA362', fontColor: '#702e00', title: '' },
+            { id: 'l104', color: '#F87168', fontColor: '#5d1f1a', title: '' },
+            { id: 'l105', color: '#9F8FEF', fontColor: '#352c63', title: '' },
+            { id: 'l106', color: '#579DFF', fontColor: '#09326c', title: '' },
         ]
 
-        make sure the returned object includes the following keys: title, isStarred, labels, members, groups, activities
+        we put an empty url() in backgroundImage field, please fill the url with image url from this array: ${stringifiedUrls}. 
+        Make sure the returned board object includes the following keys: title, isStarred, labels, members, groups, activities
         in each task please put in the members array one or more members from the board's members array, randomly.
         {
             title: 'choose a title related to the topic',
